@@ -1,11 +1,29 @@
 import React from 'react';
-import data from '../data';
 import { Link } from 'react-router-dom';
 import AwesomeSlider from 'react-awesome-slider';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styles';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function ProductScreen(props) {
-	const product = data.products.find((x) => x._id === props.match.params.id);
+	const [ product, setProduct ] = useState([]);
+	const [ images, setImages ] = useState([]);
+
+	useEffect(
+		() => {
+			axios
+				.get('/api/product/' + props.match.params.id)
+				.then((res) => {
+					setProduct(res.data);
+					setImages(res.data.images);
+				})
+				.catch((err) => console.log(err.response.data + ' : ' + err.response.status));
+			return () => {
+				//
+			};
+		},
+		[ props.match.params.id ]
+	);
 
 	return (
 		<div>
@@ -15,7 +33,7 @@ function ProductScreen(props) {
 			<div className="details">
 				<div className="details-image">
 					<AwesomeSlider cssModule={AwesomeSliderStyles}>
-						{product.images.map((image) => <div data-src={image} />)}
+						{images.map((image) => <div key={image} data-src={image} />)}
 					</AwesomeSlider>
 				</div>
 				<div className="details-info">

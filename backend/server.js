@@ -13,6 +13,10 @@ app.get('/api/products', (req, res) => {
 	res.json(data.products);
 });
 
+app.get('/api/product/:id', (req, res) => {
+	res.json(data.products.find((x) => x._id === req.params.id));
+});
+
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
 	// Set static folder
