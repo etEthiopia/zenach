@@ -1,11 +1,17 @@
-import uuid from 'uuid';
+const uuid = require('uuid');
 
-export default {
+data = {
 	products: [
 		{
-			_id: uuid(),
+			_id: uuid.v4(),
 			name: 'Slim Shirt',
-			images: [ '/images/front.jpg' ],
+			images: [
+				'/images/front.jpg',
+				'/images/frontleft.jpg',
+				'/images/frontright.jpg',
+				'/images/kidfront.jpg',
+				'/images/kidside.jpg'
+			],
 			category: 'shirts',
 			price: 40,
 			brand: 'Nike',
@@ -13,7 +19,7 @@ export default {
 			reveiwNo: 10
 		},
 		{
-			_id: uuid(),
+			_id: uuid.v4(),
 			name: 'Fit Shirt',
 			images: [
 				'/images/front.jpg',
@@ -29,7 +35,7 @@ export default {
 			reveiwNo: 8
 		},
 		{
-			_id: uuid(),
+			_id: uuid.v4(),
 			name: 'Classic Shirt',
 			images: [
 				'/images/front.jpg',
@@ -45,7 +51,7 @@ export default {
 			reveiwNo: 10
 		},
 		{
-			_id: uuid(),
+			_id: uuid.v4(),
 			name: 'Sweat Pant',
 			images: [
 				'/images/front.jpg',
@@ -61,7 +67,7 @@ export default {
 			reveiwNo: 10
 		},
 		{
-			_id: uuid(),
+			_id: uuid.v4(),
 			name: 'Jeans',
 			images: [
 				'/images/front.jpg',
@@ -77,7 +83,7 @@ export default {
 			reveiwNo: 10
 		},
 		{
-			_id: uuid(),
+			_id: uuid.v4(),
 			name: 'Skinny Jeans',
 			images: [
 				'/images/front.jpg',
@@ -94,3 +100,5 @@ export default {
 		}
 	]
 };
+
+module.exports = data;

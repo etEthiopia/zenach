@@ -5,7 +5,13 @@ export default {
 		{
 			_id: uuid(),
 			name: 'Slim Shirt',
-			images: [ '/images/front.jpg' ],
+			images: [
+				'/images/front.jpg',
+				'/images/frontleft.jpg',
+				'/images/frontright.jpg',
+				'/images/kidfront.jpg',
+				'/images/kidside.jpg'
+			],
 			category: 'shirts',
 			price: 40,
 			brand: 'Nike',
