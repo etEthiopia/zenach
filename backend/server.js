@@ -13,7 +13,7 @@ app.get('/api/products', (req, res) => {
 	res.json(data.products);
 });
 
-app.get('/api/product/:id', (req, res) => {
+app.get('/api/products/:id', (req, res) => {
 	res.json(data.products.find((x) => x._id === req.params.id));
 });
 

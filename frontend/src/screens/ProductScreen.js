@@ -2,30 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AwesomeSlider from 'react-awesome-slider';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styles';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { detailsOfProduct } from '../actions/productActions';
 
 function ProductScreen(props) {
-	const [ product, setProduct ] = useState([]);
-	const [ images, setImages ] = useState([]);
+	const productDetails = useSelector((state) => state.product);
+	const { product, loading, error, images } = productDetails;
+	const dispatch = useDispatch();
 
-	useEffect(
-		() => {
-			axios
-				.get('/api/product/' + props.match.params.id)
-				.then((res) => {
-					setProduct(res.data);
-					setImages(res.data.images);
-				})
-				.catch((err) => console.log(err.response.data + ' : ' + err.response.status));
-			return () => {
-				//
-			};
-		},
-		[ props.match.params.id ]
-	);
+	useEffect(() => {
+		dispatch(detailsOfProduct(props.match.params.id));
+	}, []);
 
-	return (
+	return loading ? (
+		<div>loading...</div>
+	) : error ? (
+		<div>{error}</div>
+	) : (
 		<div>
 			<div className="back-to-result">
 				<Link to="/">Back to result</Link>
