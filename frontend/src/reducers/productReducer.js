@@ -44,6 +44,7 @@ function productDetailsReducer(state = { product: {}, images: [] }, action) {
 			prod.brand = action.payload.brand;
 			prod.rating = action.payload.rating;
 			prod.reveiwNo = action.payload.reveiwNo;
+			
 			return { loading: false, product: prod, images: action.payload.images };
 
 		case PRODUCT_DETAILS_FAIL:
