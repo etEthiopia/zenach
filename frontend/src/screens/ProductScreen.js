@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AwesomeSlider from 'react-awesome-slider';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styles';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsOfProduct } from '../actions/productActions';
 
 function ProductScreen(props) {
+	const [ quantity, setQuantity ] = useState(1);
 	const productDetails = useSelector((state) => state.product);
 	const { product, loading, error, images } = productDetails;
 	const dispatch = useDispatch();
@@ -52,12 +53,14 @@ function ProductScreen(props) {
 						<li>Price: {product.price}</li>
 						<li>Status: {product.status}</li>
 						<li>
-							Qty:{' '}
-							<select>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
+							Quantity:
+							<select
+								value={quantity}
+								onChange={(e) => {
+									setQuantity(e.target.value);
+								}}
+							>
+								{[ ...Array(product.stock).keys() ].map((x) => <option value={x + 1}>{x + 1}</option>)}
 							</select>
 						</li>
 						<li>

@@ -16,7 +16,8 @@ data = {
 			price: 70,
 			brand: 'Addidas',
 			rating: 4.7,
-			reveiwNo: 8
+			reveiwNo: 8,
+			stock: 6
 		},
 		{
 			_id: uuid.v4(),
@@ -32,7 +33,8 @@ data = {
 			price: 40,
 			brand: 'Nike',
 			rating: 4.5,
-			reveiwNo: 10
+			reveiwNo: 10,
+			stock: 10
 		},
 		{
 			_id: uuid.v4(),
@@ -47,7 +49,8 @@ data = {
 			price: 42,
 			brand: 'Nike',
 			rating: 4.5,
-			reveiwNo: 10
+			reveiwNo: 10,
+			stock: 12
 		},
 		{
 			_id: uuid.v4(),
@@ -63,7 +66,8 @@ data = {
 			price: 70,
 			brand: 'Addidas',
 			rating: 4.7,
-			reveiwNo: 8
+			reveiwNo: 8,
+			stock: 11
 		},
 		{
 			_id: uuid.v4(),
@@ -79,7 +83,8 @@ data = {
 			price: 40,
 			brand: 'Nike',
 			rating: 4.5,
-			reveiwNo: 10
+			reveiwNo: 10,
+			stock: 3
 		},
 		{
 			_id: uuid.v4(),
@@ -94,7 +99,8 @@ data = {
 			price: 42,
 			brand: 'Nike',
 			rating: 4.5,
-			reveiwNo: 10
+			reveiwNo: 10,
+			stock: 4
 		}
 	]
 };
