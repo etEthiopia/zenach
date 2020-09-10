@@ -196,6 +196,11 @@ a:hover {
   margin-bottom: 1rem;
 }
 
+.details-action h4 {
+  color: red;
+  text-justify: auto;
+}
+
 .back-to-result {
   padding: 1rem;
 }

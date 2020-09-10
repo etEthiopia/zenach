@@ -100,7 +100,7 @@ data = {
 			brand: 'Nike',
 			rating: 4.5,
 			reveiwNo: 10,
-			stock: 4
+			stock: 0
 		}
 	]
 };

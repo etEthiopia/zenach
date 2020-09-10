@@ -16,6 +16,8 @@ function ProductScreen(props) {
 		dispatch(detailsOfProduct(props.match.params.id));
 	}, []);
 
+	const handleAddToCart = () => props.history.push('/cart/' + props.match.params.id + '?quantity=' + quantity);
+
 	return loading ? (
 		<div>loading...</div>
 	) : error ? (
@@ -48,26 +50,36 @@ function ProductScreen(props) {
 						</li>
 					</ul>
 				</div>
-				<div className="details-action">
-					<ul>
-						<li>Price: {product.price}</li>
-						<li>Status: {product.status}</li>
-						<li>
-							Quantity:
-							<select
-								value={quantity}
-								onChange={(e) => {
-									setQuantity(e.target.value);
-								}}
-							>
-								{[ ...Array(product.stock).keys() ].map((x) => <option value={x + 1}>{x + 1}</option>)}
-							</select>
-						</li>
-						<li>
-							<button className="button primary">Add to Cart</button>
-						</li>
-					</ul>
-				</div>
+				{product.stock > 0 ? (
+					<div className="details-action">
+						<ul>
+							<li>Price: {product.price}</li>
+							<li>Status: {product.status}</li>
+							<li>
+								Quantity:
+								<select
+									value={quantity}
+									onChange={(e) => {
+										setQuantity(e.target.value);
+									}}
+								>
+									{[ ...Array(product.stock).keys() ].map((x) => (
+										<option value={x + 1}>{x + 1}</option>
+									))}
+								</select>
+							</li>
+							<li>
+								<button onClick={handleAddToCart} className="button primary">
+									Add to Cart
+								</button>
+							</li>
+						</ul>
+					</div>
+				) : (
+					<div className="details-action">
+						<h4>Sorry, This product is out of Stock! </h4>
+					</div>
+				)}
 			</div>
 		</div>
 	);
