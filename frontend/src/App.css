@@ -201,6 +201,17 @@ a:hover {
   text-justify: auto;
 }
 
+.awssld__content>img {
+  float: right;
+  position: relative !important;
+  width: auto !important;
+
+}
+
+.awssld {
+  --content-background-color: transparent !important;
+}
+
 .back-to-result {
   padding: 1rem;
 }
