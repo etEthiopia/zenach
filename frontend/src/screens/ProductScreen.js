@@ -5,6 +5,7 @@ import AwesomeSliderStyles from 'react-awesome-slider/src/styles';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsOfProduct } from '../actions/productActions';
+import { addToCart } from '../actions/cartActions';
 
 function ProductScreen(props) {
 	const [ quantity, setQuantity ] = useState(1);
@@ -16,7 +17,10 @@ function ProductScreen(props) {
 		dispatch(detailsOfProduct(props.match.params.id));
 	}, []);
 
-	const handleAddToCart = () => props.history.push('/cart/' + props.match.params.id + '?quantity=' + quantity);
+	const handleAddToCart = () => {
+		dispatch(addToCart(props.match.params.id, quantity));
+		//props.history.push('/cart/' + props.match.params.id + '?quantity=' + quantity);
+	};
 
 	return loading ? (
 		<div>loading...</div>
