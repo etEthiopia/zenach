@@ -7,3 +7,23 @@ GET http://localhost:5000/api/product/f3ca7af0-1407-447f-958d-212915964fc9
 
 ###
 POST http://localhost:5000/api/users/createadmin
+
+
+###
+POST http://localhost:5000/api/users/signin
+Content-Type: application/json
+
+{
+    "email" : "daginegussu@gmail.com",
+    "password" : "daginegussu"
+}
+
+###
+POST http://localhost:5000/api/users/signup
+Content-Type: application/json
+
+{
+    "email" : "abunegussu@gmail.com",
+    "password" : "abunegussu",
+    "name": "Abu Negussu"
+}
