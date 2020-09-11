@@ -51,12 +51,12 @@ router.post('/signin', async (req, res) => {
 										throw err;
 									}
 									res.json({
-										token: token,
 										user: {
 											id: user.id,
 											name: user.name,
 											email: user.email,
-											type: user.type
+											type: user.type,
+											token: token
 										},
 										success: true
 									});
@@ -80,10 +80,10 @@ router.post('/signin', async (req, res) => {
 		);
 });
 
-// @Route POST api/users/signup
+// @Route POST api/users/register
 // @desc POST Add a User
 // @access Public
-router.post('/signup', async (req, res) => {
+router.post('/register', async (req, res) => {
 	const { name, email, password } = req.body;
 	const user = new User({
 		name: name,
@@ -98,7 +98,30 @@ router.post('/signup', async (req, res) => {
 			user
 				.save()
 				.then((user) => {
-					res.status(201).json(user)['success'] = true;
+					jwt.sign(
+						{
+							id: user.id
+						},
+						process.env.JWTSECRET,
+						{
+							expiresIn: '1 day'
+						},
+						(err, token) => {
+							if (err) {
+								throw err;
+							}
+							res.status(201).json({
+								user: {
+									id: user.id,
+									name: user.name,
+									email: user.email,
+									type: user.type,
+									token: token
+								},
+								success: true
+							});
+						}
+					);
 				})
 				.catch((err) => {
 					if (res.statusCode == 200) {
