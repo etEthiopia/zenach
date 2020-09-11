@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 require('dotenv').config();
+const getToken = require('../utils');
 
 // @Route POST api/users/signin
 // @desc POST Sign In a User
@@ -38,30 +39,13 @@ router.post('/signin', async (req, res) => {
 								message: 'Invalid Credientials.'
 							});
 						} else {
-							jwt.sign(
-								{
-									id: user.id
-								},
-								process.env.JWTSECRET,
-								{
-									expiresIn: '1 day'
-								},
-								(err, token) => {
-									if (err) {
-										throw err;
-									}
-									res.json({
-										user: {
-											id: user.id,
-											name: user.name,
-											email: user.email,
-											type: user.type,
-											token: token
-										},
-										success: true
-									});
-								}
-							);
+							res.send({
+								_id: signinUser.id,
+								name: signinUser.name,
+								email: signinUser.email,
+								isAdmin: signinUser.isAdmin,
+								token: getToken(signinUser)
+							});
 						}
 					})
 					.catch((err) =>
@@ -97,31 +81,21 @@ router.post('/register', async (req, res) => {
 			user.password = hash;
 			user
 				.save()
-				.then((user) => {
-					jwt.sign(
-						{
-							id: user.id
-						},
-						process.env.JWTSECRET,
-						{
-							expiresIn: '1 day'
-						},
-						(err, token) => {
-							if (err) {
-								throw err;
-							}
-							res.status(201).json({
-								user: {
-									id: user.id,
-									name: user.name,
-									email: user.email,
-									type: user.type,
-									token: token
-								},
-								success: true
-							});
-						}
-					);
+				.then((newUser) => {
+					if (newUser) {
+						res.send({
+							_id: newUser.id,
+							name: newUser.name,
+							email: newUser.email,
+							isAdmin: newUser.isAdmin,
+							token: getToken(newUser)
+						});
+					} else {
+						res.status(401).send({
+							message: 'Invalid User Data.',
+							success: false
+						});
+					}
 				})
 				.catch((err) => {
 					if (res.statusCode == 200) {
