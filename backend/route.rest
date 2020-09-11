@@ -3,3 +3,7 @@ GET http://localhost:5000/api/products
 ###
 
 GET http://localhost:5000/api/product/f3ca7af0-1407-447f-958d-212915964fc9
+
+
+###
+POST http://localhost:5000/api/users/createadmin

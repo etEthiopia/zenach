@@ -3,11 +3,16 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const data = require('./data');
+const userRoutes = require('./routes/userRoutes');
+require('dotenv').config();
 
 const app = express();
 
 // Bodyparser Middleware
 app.use(express.json());
+
+//routes
+app.use('/api/users/', userRoutes);
 
 app.get('/api/products', (req, res) => {
 	res.json(data.products);
@@ -26,6 +31,17 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 	});
 }
+
+mongoose
+	.connect(process.env.MONGODB_URL, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true
+	})
+	.then(console.log('Connected to the Database'))
+	.catch((err) =>
+		console.log('DB ERROR : ' + err + ', please provide the correct database link in the environment file')
+	);
 
 const port = process.env.PORT || 5000;
 
