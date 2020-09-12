@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 require('dotenv').config();
-const getToken = require('../utils');
+const { getToken, isAdmin, isAuth } = require('../utils');
 
 // @Route POST api/users/signin
 // @desc POST Sign In a User
@@ -40,11 +40,11 @@ router.post('/signin', async (req, res) => {
 							});
 						} else {
 							res.send({
-								_id: signinUser.id,
-								name: signinUser.name,
-								email: signinUser.email,
-								isAdmin: signinUser.isAdmin,
-								token: getToken(signinUser)
+								_id: user.id,
+								name: user.name,
+								email: user.email,
+								type: user.type,
+								token: getToken(user)
 							});
 						}
 					})

@@ -27,3 +27,23 @@ Content-Type: application/json
     "password" : "abunegussu",
     "name": "Abu Negussu"
 }
+
+###
+POST http://localhost:5000/api/products/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjViOGI5NDg1OWFmNTJiNjA1NWE0NWIiLCJuYW1lIjoiRGFnbWF3aSBOZWd1c3N1IiwiZW1haWwiOiJkYWdpbmVndXNzdUBnbWFpbC5jb20iLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE1OTk4OTIwMzQsImV4cCI6MTYwMDA2NDgzNH0.QWEKdT6LgUVQNeaeRNK9qK8xnkzKzsujKTcoZui6eg8
+
+//Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjViOGI5NDg1OWFmNTJiNjA1NWE0NWIiLCJuYW1lIjoiRGFnbWF3aSBOZWd1c3N1IiwiZW1haWwiOiJkYWdpbmVndXNzdUBnbWFpbC5jb20iLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE1OTk4NTE2NzUsImV4cCI6MTYwMDAyNDQ3NX0.p90onJBjCp4MDD6Zz6UjMtazIcq-WoMnzvKarjcTftI'
+{
+    
+    "name": "Abu Negussu",
+    "price": 12,
+    "image": "image_url",
+    "brand": "habesha brand",
+    "category": "habesha lebs",
+    "stock": 5,
+    "description": "this is description",
+    "rating": 5
+}
+
+

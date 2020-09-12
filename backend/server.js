@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const data = require('./data');
 const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -11,12 +12,13 @@ app.use(express.json());
 
 //routes
 app.use('/api/users/', userRoutes);
+app.use('/api/products/', productRoutes);
 
-app.get('/api/products', (req, res) => {
+app.get('/api/listproducts', (req, res) => {
 	res.json(data.products);
 });
 
-app.get('/api/products/:id', (req, res) => {
+app.get('/api/listproducts/:id', (req, res) => {
 	res.json(data.products.find((x) => x._id === req.params.id));
 });
 

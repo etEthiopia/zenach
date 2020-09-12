@@ -20,20 +20,22 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 		image: req.body.image,
 		brand: req.body.brand,
 		category: req.body.category,
-		countInStock: req.body.countInStock,
+		stock: req.body.countInStock,
 		description: req.body.description,
 		rating: req.body.rating,
 		numReviews: req.body.numReviews
 	});
-	await product
+	product
 		.save()
 		.then((newProduct) => {
+			console.log(newProduct);
 			if (newProduct) {
-				res.status(201).send({ success: true, data: newProduct });
+				res.status(201).json({ success: true, data: newProduct });
+			} else {
+				res.status(500).json({ message: ' Error in Creating Product.', success: false });
 			}
-			res.status(500).send({ message: ' Error in Creating Product.', success: false });
 		})
-		.catch((err) => res.status(500).send({ message: err.toString(), success: false }));
+		.catch((err) => res.status(500).json({ message: err.toString(), success: false }));
 });
 
 module.exports = router;
