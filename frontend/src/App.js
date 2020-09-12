@@ -1,16 +1,18 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { logout } from './actions/userActions';
 import ProductScreen from './screens/ProductScreen';
 import HomeScreen from './screens/HomeScreen';
 import CartScreen from './screens/CartScreen';
 import SignInScreen from './screens/SignInScreen';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import RegisterScreen from './screens/RegisterScreen';
 import ManageScreen from './screens/ManageScreen';
 
-function App() {
+function App(props) {
 	const userSignin = useSelector((state) => state.userSignin);
+	const dispatch = useDispatch();
 	const { userInfo } = userSignin;
 
 	const openMenu = () => {
@@ -19,6 +21,11 @@ function App() {
 
 	const closeMenu = () => {
 		document.querySelector('.sidebar').classList.remove('open');
+	};
+
+	const logoutHandler = async () => {
+		await dispatch(logout());
+		window.location = '/';
 	};
 
 	return (
@@ -31,7 +38,19 @@ function App() {
 					</div>
 					<div className="header-links">
 						<Link to="/cart">Cart</Link>
-						{userInfo ? (userInfo.type === 'admin'?<Link to="/manage">{userInfo.name}</Link> : <Link to="/">{userInfo.name}</Link>) : <Link to="/signin">Sign In</Link>}
+
+						{userInfo ? (
+							<span class="dropdown">
+								<button className="dropbtn">{userInfo.name}</button>
+								<div className="dropdown-content">
+									{userInfo.type === 'admin' && <Link to="/manage">Manage</Link>}
+									<Link to="/">Profile</Link>
+									<Link onClick={() => logoutHandler()}>Logout</Link>
+								</div>
+							</span>
+						) : (
+							<Link to="/signin">Sign In</Link>
+						)}
 					</div>
 				</header>
 				<aside className="sidebar">
