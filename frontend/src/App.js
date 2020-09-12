@@ -9,6 +9,9 @@ import SignInScreen from './screens/SignInScreen';
 import { useSelector, useDispatch } from 'react-redux';
 import RegisterScreen from './screens/RegisterScreen';
 import ManageScreen from './screens/ManageScreen';
+import ShippingScreen from './screens/ShippingScreen';
+import PaymentScreen from './screens/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 
 function App(props) {
 	const userSignin = useSelector((state) => state.userSignin);
@@ -76,6 +79,10 @@ function App(props) {
 						<Route path="/signin" component={SignInScreen} />
 						<Route path="/manage" component={ManageScreen} />
 						<Route path="/register" component={RegisterScreen} />
+						<Route path="/shipping" component={ShippingScreen} />
+						<Route path="/payment" component={PaymentScreen} />
+						<Route path="/placeorder" component={PlaceOrderScreen} />
+						
 					</div>
 				</main>
 				<footer className="footer">All right reserved.</footer>

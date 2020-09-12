@@ -24,6 +24,10 @@ function CartScreen(props) {
 		dispatch(removeFromCart(productId));
 	};
 
+	const checkoutHandler = () => {
+		props.history.push('/signin?redirect=shipping');
+	};
+
 	return error ? (
 		<div>{error}</div>
 	) : (
@@ -80,7 +84,11 @@ function CartScreen(props) {
 					SubTotal: {cartItems.reduce((x, y) => x + y.quantity, 0)} items : $:{' '}
 					{cartItems.reduce((x, y) => x + y.price * y.quantity, 0)}{' '}
 				</h3>
-				<button className="button primary full-width" disabled={cartItems.length === 0}>
+				<button
+					className="button primary full-width"
+					onClick={() => checkoutHandler()}
+					disabled={cartItems.length === 0}
+				>
 					Proceed to Checkout
 				</button>
 			</div>
