@@ -31,7 +31,7 @@ function App() {
 					</div>
 					<div className="header-links">
 						<Link to="/cart">Cart</Link>
-						{userInfo ? <Link to="/signin">{userInfo.name}</Link> : <Link to="/signin">Sign In</Link>}
+						{userInfo ? (userInfo.type === 'admin'?<Link to="/manage">{userInfo.name}</Link> : <Link to="/">{userInfo.name}</Link>) : <Link to="/signin">Sign In</Link>}
 					</div>
 				</header>
 				<aside className="sidebar">

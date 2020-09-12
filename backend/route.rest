@@ -2,11 +2,7 @@
 GET http://localhost:5000/api/products
 ###
 
-GET http://localhost:5000/api/product/f3ca7af0-1407-447f-958d-212915964fc9
-
-
-###
-POST http://localhost:5000/api/users/createadmin
+GET http://localhost:5000/api/products/5f5c8cfee094f621ac315d71
 
 
 ###
@@ -31,19 +27,27 @@ Content-Type: application/json
 ###
 POST http://localhost:5000/api/products/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjViOGI5NDg1OWFmNTJiNjA1NWE0NWIiLCJuYW1lIjoiRGFnbWF3aSBOZWd1c3N1IiwiZW1haWwiOiJkYWdpbmVndXNzdUBnbWFpbC5jb20iLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE1OTk4OTIwMzQsImV4cCI6MTYwMDA2NDgzNH0.QWEKdT6LgUVQNeaeRNK9qK8xnkzKzsujKTcoZui6eg8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjViOGI5NDg1OWFmNTJiNjA1NWE0NWIiLCJuYW1lIjoiRGFnbWF3aSBOZWd1c3N1IiwiZW1haWwiOiJkYWdpbmVndXNzdUBnbWFpbC5jb20iLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE1OTk4OTk0OTgsImV4cCI6MTYwMDA3MjI5OH0.xdsv24E2Ijw45-3lF8_SnpkuinI_JGz-5on-dnLRWyk
 
-//Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjViOGI5NDg1OWFmNTJiNjA1NWE0NWIiLCJuYW1lIjoiRGFnbWF3aSBOZWd1c3N1IiwiZW1haWwiOiJkYWdpbmVndXNzdUBnbWFpbC5jb20iLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE1OTk4NTE2NzUsImV4cCI6MTYwMDAyNDQ3NX0.p90onJBjCp4MDD6Zz6UjMtazIcq-WoMnzvKarjcTftI'
 {
-    
-    "name": "Abu Negussu",
-    "price": 12,
-    "image": "image_url",
-    "brand": "habesha brand",
-    "category": "habesha lebs",
-    "stock": 5,
-    "description": "this is description",
-    "rating": 5
-}
+			"name": "Classic BBBB Shirt",
+			"images": [
+				"/images/nike/black2.png",
+				"/images/nike/black3.png",
+				"/images/nike/black4.png",
+				"/images/nike/black1.png"
+			],
+			"category": "shirts",
+			"price": 42,
+			"brand": "Nike",
+			"rating": 4.5,
+			"reviewNo": 9,
+			"description": "this is description",
+			"stock": 12
+		}
+
+###
+DELETE  http://localhost:5000/api/products/5f5ca87b13bb2934e80c14b2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjViOGI5NDg1OWFmNTJiNjA1NWE0NWIiLCJuYW1lIjoiRGFnbWF3aSBOZWd1c3N1IiwiZW1haWwiOiJkYWdpbmVndXNzdUBnbWFpbC5jb20iLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE1OTk4OTk0OTgsImV4cCI6MTYwMDA3MjI5OH0.xdsv24E2Ijw45-3lF8_SnpkuinI_JGz-5on-dnLRWyk
 
 
