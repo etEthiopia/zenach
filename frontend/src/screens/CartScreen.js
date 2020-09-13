@@ -58,11 +58,18 @@ function CartScreen(props) {
 											value={item.quantity}
 											onChange={(e) => dispatch(addToCart(item.productId, e.target.value))}
 										>
-											{[ ...Array(item.stock).keys() ].map((x) => (
-												<option key={x + 1} value={x + 1}>
-													{x + 1}
-												</option>
-											))}
+											{[ ...Array(item.stock).keys() ].map(
+												(x) =>
+													item.quantity === x + 1 ? (
+														<option key={x + 1} selected value={x + 1}>
+															{x + 1}
+														</option>
+													) : (
+														<option key={x + 1} value={x + 1}>
+															{x + 1}
+														</option>
+													)
+											)}
 										</select>
 										<button
 											type="button"

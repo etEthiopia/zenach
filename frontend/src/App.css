@@ -16,6 +16,11 @@ body {
 
 button {
   font-size: 1.6rem;
+  padding: 0.4rem 1rem !important;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
 }
 
 .full-width {
