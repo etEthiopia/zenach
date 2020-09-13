@@ -1,27 +1,18 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useSelector, useDispatch } from 'react-redux';
-import CheckoutSteps from '../components/CheckoutSteps';
+import { createOrder } from '../actions/orderActions';
 
 function PlaceOrderScreen(props) {
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
-	const productId = props.match.params.id;
-	const quantity = props.location.search ? Number(props.location.search.split('=')[1]) : 1;
+	const orderCreate = useSelector((state) => state.orderCreate);
+	const { loading, success, error, order } = orderCreate;
 
-	useEffect(() => {
-		if (productId) {
-			dispatch(addToCart(productId, quantity));
-		}
-		return () => {
-			//
-		};
-	}, []);
-	if (!shipping) {
+	if (!shipping.address) {
 		props.history.push('/shipping');
-	} else if (!payment) {
+	} else if (!payment.paymentMethod) {
 		props.history.push('/payment');
 	}
 
@@ -31,26 +22,32 @@ function PlaceOrderScreen(props) {
 	const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
 	const placeOrderHandler = () => {
-		// create an order
+		dispatch(
+			createOrder({
+				orderItems: cartItems,
+				shipping,
+				payment,
+				itemsPrice,
+				shippingPrice,
+				taxPrice,
+				totalPrice
+			})
+		);
 	};
+
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		if (productId) {
-			dispatch(addToCart(productId, quantity));
-		}
-		return () => {
-			//
-		};
-	}, []);
-
-	const removeFromCartHandler = (productId) => {
-		dispatch(removeFromCart(productId));
-	};
+	useEffect(
+		() => {
+			if (success) {
+				props.history.push('/order/' + order._id);
+			}
+		},
+		[ success ]
+	);
 
 	return (
 		<div>
-			<CheckoutSteps step1 step2 step3 step4 />
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>
@@ -77,7 +74,7 @@ function PlaceOrderScreen(props) {
 								<div>Cart is Empty</div>
 							) : (
 								cartItems.map((item) => (
-									<li key={item.productId}>
+									<li key={item.product}>
 										<div className="cart-image">
 											<img src={item.image} alt="product" />
 										</div>
@@ -85,27 +82,7 @@ function PlaceOrderScreen(props) {
 											<div>
 												<Link to={'/product/' + item.product}>{item.name}</Link>
 											</div>
-											<div>
-												Quantity:
-												<select
-													value={item.quantity}
-													onChange={(e) =>
-														dispatch(addToCart(item.productId, e.target.value))}
-												>
-													{[ ...Array(item.stock).keys() ].map((x) => (
-														<option key={x + 1} value={x + 1}>
-															{x + 1}
-														</option>
-													))}
-												</select>
-												<button
-													type="button"
-													onClick={() => removeFromCartHandler(item.productId)}
-													className="button"
-												>
-													Delete
-												</button>
-											</div>
+											<div>Quantity: {item.quantity}</div>
 										</div>
 										<div className="cart-price">${item.price}</div>
 									</li>
@@ -117,7 +94,11 @@ function PlaceOrderScreen(props) {
 				<div className="placeorder-action">
 					<ul>
 						<li>
-							<button className="button primary full-width" disabled={cartItems.length === 0}>
+							<button
+								className="button primary full-width"
+								disabled={cartItems.length === 0}
+								onClick={placeOrderHandler}
+							>
 								Place Order
 							</button>
 						</li>
@@ -142,11 +123,6 @@ function PlaceOrderScreen(props) {
 							<div>${totalPrice}</div>
 						</li>
 					</ul>
-
-					<h3>
-						SubTotal: {cartItems.reduce((x, y) => x + y.quantity, 0)} items : $:{' '}
-						{cartItems.reduce((x, y) => x + y.price * y.quantity, 0)}{' '}
-					</h3>
 				</div>
 			</div>
 		</div>

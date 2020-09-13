@@ -31,16 +31,20 @@ router.post('/', isAuth, async (req, res) => {
 		shippingPrice: req.body.shippingPrice,
 		totalPrice: req.body.totalPrice
 	});
+	console.log(req.body);
 	newOrder
 		.save()
 		.then((orderSaved) => {
 			if (orderSaved) {
-				res.status(201).json({ success: true, data: newOrderCreated });
+				res.status(201).json({ success: true, data: orderSaved });
 			} else {
 				res.status(500).json({ success: false, message: 'Order not Created' });
 			}
 		})
-		.catch((err) => res.status(500).json({ message: err.toString(), success: false }));
+		.catch((err) => {
+			console.log(err);
+			res.status(500).json({ message: err.toString(), success: false });
+		});
 });
 
 module.exports = router;

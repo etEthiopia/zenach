@@ -14,7 +14,7 @@ import Cookie from 'js-cookie';
 const cartItems = Cookie.getJSON('cartItems') || [];
 const userInfo = Cookie.getJSON('userInfo') || null;
 
-const initialState = { cart: { cartItems }, userSignin: { userInfo } };
+const initialState = { cart: { cartItems, shipping: {}, payment: {} }, userSignin: { userInfo } };
 const middleWare = [ thunk ];
 
 const reducer = combineReducers({
@@ -24,7 +24,6 @@ const reducer = combineReducers({
 	cart: cartReducers,
 	userSignin: userSigninReducer,
 	userRegister: userRegisterReducer,
-	productDelete: productDeleteReducer,
 	productDelete: productDeleteReducer,
 	orderCreate: orderCreateReducer,
 	orderDetails: orderDetailsReducer

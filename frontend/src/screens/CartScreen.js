@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useSelector, useDispatch } from 'react-redux';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 function CartScreen(props) {
 	const cart = useSelector((state) => state.cart);
@@ -21,7 +23,20 @@ function CartScreen(props) {
 	}, []);
 
 	const removeFromCartHandler = (productId) => {
-		dispatch(removeFromCart(productId));
+		confirmAlert({
+			title: 'Confirm to Delete',
+			message: 'Are you sure to delete this Item?',
+			buttons: [
+				{
+					label: 'Yes',
+					onClick: () => dispatch(removeFromCart(productId))
+				},
+				{
+					label: 'No',
+					onClick: () => {}
+				}
+			]
+		});
 	};
 
 	const checkoutHandler = () => {
@@ -44,7 +59,7 @@ function CartScreen(props) {
 						<div>Cart is Empty</div>
 					) : (
 						cartItems.map((item) => (
-							<li key={item.productId}>
+							<li key={item.product}>
 								<div className="cart-image">
 									<img src={item.image} alt="product" />
 								</div>
@@ -56,7 +71,7 @@ function CartScreen(props) {
 										Quantity:
 										<select
 											value={item.quantity}
-											onChange={(e) => dispatch(addToCart(item.productId, e.target.value))}
+											onChange={(e) => dispatch(addToCart(item.product, e.target.value))}
 										>
 											{[ ...Array(item.stock).keys() ].map(
 												(x) =>
@@ -73,7 +88,7 @@ function CartScreen(props) {
 										</select>
 										<button
 											type="button"
-											onClick={() => removeFromCartHandler(item.productId)}
+											onClick={() => removeFromCartHandler(item.product)}
 											className="button"
 										>
 											Delete
@@ -88,7 +103,7 @@ function CartScreen(props) {
 			</div>
 			<div className="cart-action">
 				<h3>
-					SubTotal: {cartItems.reduce((x, y) => x + y.quantity, 0)} items : $:{' '}
+					SubTotal: {cartItems.reduce((a, c) => a + c.quantity * 1, 0)} items : $:{' '}
 					{cartItems.reduce((x, y) => x + y.price * y.quantity, 0)}{' '}
 				</h3>
 				<button

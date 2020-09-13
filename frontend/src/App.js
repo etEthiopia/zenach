@@ -12,6 +12,7 @@ import ManageScreen from './screens/ManageScreen';
 import ShippingScreen from './screens/ShippingScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import OrderScreen from './screens/OrderScreen';
 
 function App(props) {
 	const userSignin = useSelector((state) => state.userSignin);
@@ -82,7 +83,7 @@ function App(props) {
 						<Route path="/shipping" component={ShippingScreen} />
 						<Route path="/payment" component={PaymentScreen} />
 						<Route path="/placeorder" component={PlaceOrderScreen} />
-						
+						<Route path="/order/:id" component={OrderScreen} />
 					</div>
 				</main>
 				<footer className="footer">All right reserved.</footer>

@@ -14,7 +14,7 @@ const paymentSchema = {
 const orderItemSchema = new mongoose.Schema(
 	{
 		name: { type: String, required: true },
-		qunantity: { type: Number, required: true },
+		quantity: { type: Number, required: true },
 		image: { type: String, required: true },
 		price: { type: String, required: true },
 		product: {
