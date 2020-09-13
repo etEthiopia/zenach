@@ -47,4 +47,27 @@ router.post('/', isAuth, async (req, res) => {
 		});
 });
 
+// @Route POST api/orders/
+// @desc POST pays an order
+// @access User
+router.put('/:id/pay', isAuth, async (req, res) => {
+	Order.findById(req.params.id)
+		.then((order) => {
+			console.log(order);
+			if (order) {
+				order.isPaid = true;
+				order.paidAt = Date.now();
+				order
+					.save()
+					.then((updatedOrder) => {
+						res.json({ success: true, order: updatedOrder });
+					})
+					.catch((err) => res.status(500).json({ message: err.toString(), success: false }));
+			} else {
+				res.status(404).json({ message: 'Order not found.', success: false });
+			}
+		})
+		.catch((err) => res.status(500).json({ message: err.toString(), success: false }));
+});
+
 module.exports = router;

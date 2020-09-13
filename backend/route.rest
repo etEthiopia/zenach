@@ -15,6 +15,16 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://localhost:5000/api/users/signin
+Content-Type: application/json
+
+{
+    "email" : "abunegussu@gmail.com",
+    "password" : "abunegussu"
+}
+
+###
 POST http://localhost:5000/api/users/signup
 Content-Type: application/json
 
@@ -50,4 +60,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjViOGI5N
 DELETE  http://localhost:5000/api/products/5f5ca87b13bb2934e80c14b2
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjViOGI5NDg1OWFmNTJiNjA1NWE0NWIiLCJuYW1lIjoiRGFnbWF3aSBOZWd1c3N1IiwiZW1haWwiOiJkYWdpbmVndXNzdUBnbWFpbC5jb20iLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE1OTk4OTk0OTgsImV4cCI6MTYwMDA3MjI5OH0.xdsv24E2Ijw45-3lF8_SnpkuinI_JGz-5on-dnLRWyk
 
+
+###
+PUT http://localhost:5000/api/orders/5f5e63e599cbfc1730dd87e9/pay/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjViOGU1NDg5MTI4NjFhNzA3NzZiNmUiLCJuYW1lIjoiQWJ1IE5lZ3Vzc3UiLCJlbWFpbCI6ImFidW5lZ3Vzc3VAZ21haWwuY29tIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2MDAwMjIyNjgsImV4cCI6MTYwMDE5NTA2OH0.gVVeH4lgi_0ST9NYVLx1pLkAieyiHKYf3guZeelCIlk
 
