@@ -1,18 +1,41 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrder } from '../actions/orderActions';
+import { createOrder, detailsOrder, payOrder } from '../actions/orderActions';
+import { logout } from '../actions/userActions';
+
 function OrderScreen(props) {
 	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(detailsOrder(props.match.params.id));
-		return () => {};
-	}, []);
 
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { loading, order, error } = orderDetails;
+	const orderPay = useSelector((state) => state.orderPay);
+	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
 	const payHandler = () => {};
-	
+
+	useEffect(
+		() => {
+			if (successPay) {
+				props.history.push('/');
+			} else if (errorPay) {
+				if (errorPay.includes('401')) {
+					alert('Sorry you are UnAuthorized');
+					dispatch(logout());
+					window.location = '/';
+				}
+			} else {
+				dispatch(detailsOrder(props.match.params.id));
+			}
+
+			return () => {};
+		},
+		[ successPay, errorPay ]
+	);
+
+	const handlePayment = (order) => {
+		dispatch(payOrder(order));
+	};
+
 	return loading ? (
 		<div>Loading ...</div>
 	) : error ? (
@@ -63,10 +86,28 @@ function OrderScreen(props) {
 				</div>
 				<div className="placeorder-action">
 					<ul>
-						<li>
-							<button className="button primary full-width" onClick={payHandler}>
-								Pay Now
-							</button>
+						<li className="placeorder-actions-payment">
+							{loadingPay && <div>Finishing Payment...</div>}
+							{!order.isPaid &&
+								(order.payment.paymentMethod === 'paypal' ? (
+									<Link
+										onClick={() => {
+											handlePayment(order._id);
+										}}
+									>
+										{' '}
+										<img src="/images/payment/paypal.png" />
+									</Link>
+								) : (
+									<Link
+										onClick={() => {
+											handlePayment(order._id);
+										}}
+									>
+										{' '}
+										<img src="/images/payment/payoneer.png" />
+									</Link>
+								))}
 						</li>
 						<li>
 							<h3>Order Summary</h3>

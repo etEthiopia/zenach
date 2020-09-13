@@ -507,6 +507,15 @@ tbody>tr:nth-child(odd) {
   color: #c04000;
 }
 
-.placeorder-actions-payment>div {
-  width: 100%;
+.placeorder-actions-payment a {
+  margin: auto;
 }
+
+.placeorder-actions-payment img {
+  max-width: 20rem;
+
+}
+
+/* .placeorder-actions-payment>div {
+  width: 100%;
+} */

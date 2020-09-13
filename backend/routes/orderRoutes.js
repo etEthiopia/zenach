@@ -53,7 +53,6 @@ router.post('/', isAuth, async (req, res) => {
 router.put('/:id/pay', isAuth, async (req, res) => {
 	Order.findById(req.params.id)
 		.then((order) => {
-			console.log(order);
 			if (order) {
 				order.isPaid = true;
 				order.paidAt = Date.now();
