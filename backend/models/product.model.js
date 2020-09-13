@@ -17,9 +17,4 @@ const productSchema = new mongoose.Schema(
 	}
 );
 
-module.exports.toJSON = function(obj) {
-	var obj = this.toObject();
-	return obj;
-};
-
 module.exports = mongoose.model('Product', productSchema);
