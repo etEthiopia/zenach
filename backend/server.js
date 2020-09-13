@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const data = require('./data');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -13,15 +14,7 @@ app.use(express.json());
 //routes
 app.use('/api/users/', userRoutes);
 app.use('/api/products/', productRoutes);
-
-app.get('/api/listproducts', (req, res) => {
-	res.json(data.products);
-});
-
-app.get('/api/listproducts/:id', (req, res) => {
-	res.json(data.products.find((x) => x._id === req.params.id));
-});
-
+app.use('/api/orders', orderRoutes);
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
 	// Set static folder
