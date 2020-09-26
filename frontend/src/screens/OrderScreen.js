@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createOrder, detailsOrder, payOrder } from '../actions/orderActions';
+import { detailsOrder, payOrder } from '../actions/orderActions';
 import { logout } from '../actions/userActions';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 function OrderScreen(props) {
 	const dispatch = useDispatch();
@@ -11,19 +15,30 @@ function OrderScreen(props) {
 	const { loading, order, error } = orderDetails;
 	const orderPay = useSelector((state) => state.orderPay);
 	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
-	const payHandler = () => {};
 
 	useEffect(
 		() => {
 			if (successPay) {
-				props.history.push('/');
+				confirmAlert({
+					title: 'Payment Success!',
+					message: 'The Item has been successfully ordered',
+					buttons: [
+						{
+							label: 'Ok',
+							onClick: () => {
+								props.history.push('/');
+							}
+						}
+					]
+				});
 			} else if (errorPay) {
 				if (errorPay.includes('401')) {
-					alert('Sorry you are UnAuthorized');
+					NotificationManager.error('Sorry you are UnAuthorized', 'Error');
 					dispatch(logout());
 					window.location = '/';
 				}
 			} else {
+				NotificationManager.error("Couldn't order the Item to cart", 'Error');
 				dispatch(detailsOrder(props.match.params.id));
 			}
 
@@ -34,6 +49,25 @@ function OrderScreen(props) {
 
 	const handlePayment = (order) => {
 		dispatch(payOrder(order));
+	};
+
+	const confirmPayment = (order) => {
+		confirmAlert({
+			title: 'Confirm to Payment',
+			message: 'Please, confirm to pay!',
+			buttons: [
+				{
+					label: 'Pay',
+					onClick: () => {
+						handlePayment(order);
+					}
+				},
+				{
+					label: 'Cancel',
+					onClick: () => {}
+				}
+			]
+		});
 	};
 
 	return loading ? (
@@ -92,7 +126,7 @@ function OrderScreen(props) {
 								(order.payment.paymentMethod === 'paypal' ? (
 									<Link
 										onClick={() => {
-											handlePayment(order._id);
+											confirmPayment(order._id);
 										}}
 									>
 										{' '}
@@ -101,7 +135,7 @@ function OrderScreen(props) {
 								) : (
 									<Link
 										onClick={() => {
-											handlePayment(order._id);
+											confirmPayment(order._id);
 										}}
 									>
 										{' '}
@@ -131,6 +165,7 @@ function OrderScreen(props) {
 					</ul>
 				</div>
 			</div>
+			<NotificationContainer />
 		</div>
 	);
 }

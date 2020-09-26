@@ -39,7 +39,7 @@ router.post('/signin', async (req, res) => {
 								message: 'Invalid Credientials.'
 							});
 						} else {
-							res.send({
+							res.json({
 								_id: user.id,
 								name: user.name,
 								email: user.email,
@@ -51,6 +51,50 @@ router.post('/signin', async (req, res) => {
 					.catch((err) =>
 						res.json({
 							message: err.toString(),
+							success: false
+						})
+					);
+			}
+		})
+		.catch((err) =>
+			res.json({
+				message: err,
+				success: false
+			})
+		);
+});
+
+// @Route PUT api/users/:id
+// @desc PUT Edit user info
+// @access User
+router.put('/:id', isAuth, async (req, res) => {
+	const userId = req.params.id;
+	await User.findById(userId)
+		.then((user) => {
+			if (user) {
+				user.name = req.body.name || user.name;
+				user.email = req.body.email || user.email;
+				user.password = req.body.password || user.password;
+
+				user.save().then((updatedUser) => {
+					res.json({
+						_id: updatedUser.id,
+						name: updatedUser.name,
+						email: updatedUser.email,
+						type: updatedUser.type,
+						token: getToken(updatedUser)
+					});
+				});
+			} else {
+				res
+					.status(404)
+					.json({
+						message: 'User not found',
+						success: false
+					})
+					.catch((err) =>
+						res.json({
+							message: err,
 							success: false
 						})
 					);
