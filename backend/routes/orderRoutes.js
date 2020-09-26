@@ -42,7 +42,6 @@ router.post('/', isAuth, async (req, res) => {
 			}
 		})
 		.catch((err) => {
-			console.log(err);
 			res.status(500).json({ message: err.toString(), success: false });
 		});
 });
@@ -67,6 +66,28 @@ router.put('/:id/pay', isAuth, async (req, res) => {
 			}
 		})
 		.catch((err) => res.status(500).json({ message: err.toString(), success: false }));
+});
+
+// @Route GET api/orders/mine
+// @desc GET retrieves a users orders
+// @access User
+router.get('/mine', isAuth, async (req, res) => {
+	console.log(req);
+	Order.find({ user: 'hjgjk' })
+		.then((orders) => {
+			if (orders) {
+				res.json({
+					success: true,
+					orders
+				});
+			} else {
+				res.status(404).json({ message: 'Order Not Found.', success: false });
+			}
+		})
+		.catch((err) => {
+			console.log('catched');
+			res.status(500).json({ message: err.toString(), success: false });
+		});
 });
 
 module.exports = router;

@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsOfProduct } from '../actions/productActions';
 import { addToCart } from '../actions/cartActions';
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 function ProductScreen(props) {
 	const [ quantity, setQuantity ] = useState(1);
@@ -18,7 +20,12 @@ function ProductScreen(props) {
 	}, []);
 
 	const handleAddToCart = () => {
-		dispatch(addToCart(props.match.params.id, quantity));
+		try {
+			dispatch(addToCart(props.match.params.id, quantity));
+			NotificationManager.success('Item added to cart');
+		} catch (e) {
+			NotificationManager.error("Couldn't add Item to cart", 'Error');
+		}
 		//props.history.push('/cart/' + props.match.params.id + '?quantity=' + quantity);
 	};
 
@@ -84,6 +91,7 @@ function ProductScreen(props) {
 					</div>
 				)}
 			</div>
+			<NotificationContainer />
 		</div>
 	);
 }
